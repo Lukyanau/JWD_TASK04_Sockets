@@ -1,0 +1,17 @@
+We can have different type of houses, such as Wooden House and Glass House.
+Hi hi.
+House.
+Here is the code.
+***
+public class WoodenHouse extends HouseTemplate {
+    @Override
+    public void buildWalls() {
+        System.out.println("Building Wooden Walls");
+    }
+    @Override
+    public void buildPillars() {
+        System.out.println("Building Pillars with Wood coating");
+    }
+}
+****
+We could have overridden other methods also, but for simplicity I am not doing that.
