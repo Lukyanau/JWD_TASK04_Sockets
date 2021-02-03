@@ -36,6 +36,10 @@ public class Server {
                         osToClient.writeObject(service.findUniqueWordsInFirstSe(textParser.generateParsedTest("resources/programmingText.txt")));
                         osToClient.flush();
                         break;
+                    case 4:
+                        int givenLength = isFromClient.readInt();
+                        osToClient.writeObject(service.findWordsOfGivenLengthInInterrogativeSentence(textParser.generateParsedTest("resources/programmingText.txt"), givenLength));
+                        break;
                     default:
                         osToClient.writeObject("Your input is incorrect, try again");
                         osToClient.flush();
