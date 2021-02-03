@@ -39,6 +39,7 @@ public class Server {
                     case 4:
                         int givenLength = isFromClient.readInt();
                         osToClient.writeObject(service.findWordsOfGivenLengthInInterrogativeSentence(textParser.generateParsedTest("resources/programmingText.txt"), givenLength));
+                        osToClient.flush();
                         break;
                     default:
                         osToClient.writeObject("Your input is incorrect, try again");
