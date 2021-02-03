@@ -137,4 +137,10 @@ public class ServiceImplTest {
                 ("")).getSentences();
         assertNotEquals(expectedWord, actualWord);
     }
+    
+    @After
+    public void tearDown() throws Exception {
+        service = null;
+        textParser = null;
+    }
 }
