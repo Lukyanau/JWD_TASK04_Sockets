@@ -7,9 +7,7 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class ServiceImpl implements Service {
-    private static final String PUNCTUATION_MARKS_REGEX = "[?,.:;-]";
-    private static final String WORD_SPLIT_REGEX = "\\W+";
-
+ 
     private static final ServiceImpl instance = new ServiceImpl();
 
     private ServiceImpl() {
@@ -18,6 +16,9 @@ public class ServiceImpl implements Service {
     public static ServiceImpl getInstance() {
         return instance;
     }
+    
+    private static final String PUNCTUATION_MARKS_REGEX = "[?,.:;-]";
+    private static final String WORD_SPLIT_REGEX = "\\W+";
 
     @Override
     public String printAllText(ParsedText parsedText) {
