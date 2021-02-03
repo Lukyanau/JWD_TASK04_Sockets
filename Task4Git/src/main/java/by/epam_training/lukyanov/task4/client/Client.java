@@ -22,6 +22,7 @@ public class Client {
                 System.out.println("1 - Show sentences with the same words:");
                 System.out.println("2 - Show sentences by number of words:");
                 System.out.println("3 - Show first sentence unique words:");
+                System.out.println("4 - Find words of given length in interrogative sentences:");
 
 
                 int option = Integer.parseInt(input.readLine());
@@ -38,6 +39,14 @@ public class Client {
                     case 1, 2, 3:
                         ParsedText answer = (ParsedText) isFromServer.readObject();
                         System.out.println("Answer to the selected option is " + answer);
+                        break;
+                    case 4:
+                        System.out.println("Input length of word:");
+                        int givenLength = Integer.parseInt(input.readLine());
+                        osToServer.writeInt(givenLength);
+                        osToServer.flush();
+                        ParsedText answer4 = (ParsedText) isFromServer.readObject();
+                        System.out.println("Answer to the selected option is " + answer4);
                         break;
                     default:
                         System.out.println("Something wrong with your input, try again(");
