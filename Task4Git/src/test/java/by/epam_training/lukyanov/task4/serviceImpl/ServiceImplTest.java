@@ -25,6 +25,7 @@ public class ServiceImplTest {
                 "Hi hi.\n" +
                 "House.\n" +
                 "Here is the code.\n" +
+                "Do you, know something about Java?\n" +
                 "We could have overridden other methods also, but for simplicity I am not doing that.";
         String actualText = service.printAllText(textParser.generateParsedTest("resources/programmingText.txt"));
         assertEquals(expectedText, actualText.trim());
@@ -84,7 +85,7 @@ public class ServiceImplTest {
     @Test
     public void sortSentenceByNumberOfWordsShouldReturnCorrectObject() throws ProjectException {
         List<String> expectedWord = new ArrayList<String>
-                (Arrays.asList("House.","Hi hi.", "Here is the code.", "We can have different type of houses, such as Wooden House and Glass House.",
+                (Arrays.asList("House.", "Hi hi.", "Here is the code.", "Do you, know something about Java?", "We can have different type of houses, such as Wooden House and Glass House.",
                         "We could have overridden other methods also, but for simplicity I am not doing that."));
         List<String> actualWord = service.sortSentenceByNumberOfWords(textParser.generateParsedTest
                 ("resources/programmingText.txt")).getSentences();
@@ -94,7 +95,7 @@ public class ServiceImplTest {
     @Test
     public void sortSentenceByNumberOfWordsShouldReturnIncorrectObject() throws ProjectException {
         List<String> expectedWord = new ArrayList<String>
-                (Arrays.asList("House.","Hi hi.", "Here is the code.", "We can have different type of houses, such as Wooden House and Glass House.",
+                (Arrays.asList("House.", "Hi hi.", "Here is the code.", "We can have different type of houses, such as Wooden House and Glass House.",
                         "We could have overridden other methods also, but for simplicity I am not doing that."));
         List<String> actualWord = service.sortSentenceByNumberOfWords(textParser.generateParsedTest
                 ("resources/incorrectTextForTests")).getSentences();
@@ -104,7 +105,7 @@ public class ServiceImplTest {
     @Test(expected = ProjectException.class)
     public void sortSentenceByNumberOfWordsShouldThrowException() throws ProjectException {
         List<String> expectedWord = new ArrayList<String>
-                (Arrays.asList("House.","Hi hi.", "Here is the code.", "We can have different type of houses, such as Wooden House and Glass House.",
+                (Arrays.asList("House.", "Hi hi.", "Here is the code.", "We can have different type of houses, such as Wooden House and Glass House.",
                         "We could have overridden other methods also, but for simplicity I am not doing that."));
         List<String> actualWord = service.sortSentenceByNumberOfWords(textParser.generateParsedTest
                 ("")).getSentences();
@@ -135,6 +136,33 @@ public class ServiceImplTest {
                 (Arrays.asList("can", "different", "type", "of", "houses", "such", "as", "Wooden", "and", "Glass"));
         List<String> actualWord = service.findUniqueWordsInFirstSentence(textParser.generateParsedTest
                 ("")).getSentences();
+        assertNotEquals(expectedWord, actualWord);
+    }
+
+    @Test
+    public void findWordsOfGivenLengthInInterrogativeSentenceShouldReturnCorrectObject() throws ProjectException {
+        List<String> expectedWord = new ArrayList<String>
+                (Arrays.asList("Do"));
+        List<String> actualWord = service.findWordsOfGivenLengthInInterrogativeSentence(textParser.generateParsedTest
+                ("resources/programmingText.txt"), 2).getSentences();
+        assertEquals(expectedWord, actualWord);
+    }
+
+    @Test
+    public void findWordsOfGivenLengthInInterrogativeSentenceShouldReturnIncorrectObject() throws ProjectException {
+        List<String> expectedWord = new ArrayList<String>
+                (Arrays.asList("Do"));
+        List<String> actualWord = service.findWordsOfGivenLengthInInterrogativeSentence(textParser.generateParsedTest
+                ("resources/incorrectTextForTests"), 2).getSentences();
+        assertNotEquals(expectedWord, actualWord);
+    }
+
+    @Test(expected = ProjectException.class)
+    public void findWordsOfGivenLengthInInterrogativeSentenceShouldThrowException() throws ProjectException {
+        List<String> expectedWord = new ArrayList<String>
+                (Arrays.asList("Do"));
+        List<String> actualWord = service.findWordsOfGivenLengthInInterrogativeSentence
+                (textParser.generateParsedTest(""), 2).getSentences();
         assertNotEquals(expectedWord, actualWord);
     }
     
