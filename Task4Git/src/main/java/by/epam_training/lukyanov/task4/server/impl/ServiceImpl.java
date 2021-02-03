@@ -83,4 +83,25 @@ public class ServiceImpl implements Service {
         }
         return new ParsedText(uniqueWords);
     }
+    
+    public ParsedText findWordsOfGivenLengthInInterrogativeSentence(ParsedText parsedText, int length) {
+        List<String> necessaryWords = new ArrayList<String>();
+        List<String> interrogativeSentences = new ArrayList<String>();
+        List<String> allSentence = parsedText.getSentences();
+        for (String line : allSentence) {
+            if (line.charAt(line.length() - 1) == '?') {
+                interrogativeSentences.add(line);
+            }
+        }
+        for (String line : interrogativeSentences) {
+            String str = line.replaceAll(PUNCTUATION_MARKS_REGEX, "");
+            String[] words = str.split(WORD_SPLIT_REGEX);
+            for (String word : words) {
+                if (word.length() == length){
+                    necessaryWords.add(word);
+                }
+            }
+        }
+        return new ParsedText(necessaryWords);
+    }
 }
