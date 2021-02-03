@@ -7,6 +7,9 @@ import java.lang.reflect.Array;
 import java.util.*;
 
 public class ServiceImpl implements Service {
+    private static final String PUNCTUATION_MARKS_REGEX = "[?,.:;-]";
+    private static final String WORD_SPLIT_REGEX = "\\W+";
+
     private static final ServiceImpl instance = new ServiceImpl();
 
     private ServiceImpl() {
@@ -27,8 +30,8 @@ public class ServiceImpl implements Service {
         List<String> allSentences = parsedText.getSentences();
         for (String line : allSentences) {
             boolean founded = false;
-            String str = line.replaceAll("[,.:-]", "");
-            String[] words = str.split(" ");
+            String str = line.replaceAll(PUNCTUATION_MARKS_REGEX, "");
+            String[] words = str.split(WORD_SPLIT_REGEX);
             Map<String, Integer> occurrences = new HashMap<String, Integer>();
             for (String word : words) {
                 Integer oldCount = occurrences.get(word.toLowerCase());
@@ -52,24 +55,24 @@ public class ServiceImpl implements Service {
         allSentences.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                return o1.split(" ").length - o2.split(" ").length;
+                return o1.split(WORD_SPLIT_REGEX).length - o2.split(WORD_SPLIT_REGEX).length;
             }
 
         });
         return new ParsedText(allSentences);
     }
 
-    public ParsedText findUniqueWordsInFirstSe(ParsedText parsedText) {
+    public ParsedText findUniqueWordsInFirstSentence(ParsedText parsedText) {
         List<String> uniqueWords = new ArrayList<String>();
         List<String> allSentence = parsedText.getSentences();
-        String firstLine = allSentence.get(0).replaceAll("[,.:-]", "");
-        String[] firstLineWords = firstLine.split(" ");
+        String firstLine = allSentence.get(0).replaceAll(PUNCTUATION_MARKS_REGEX, "");
+        String[] firstLineWords = firstLine.split(WORD_SPLIT_REGEX);
         for (String firstLineWord : firstLineWords) {
             boolean isUnique = true;
             comparing:
             for (int i = 1; i < allSentence.size(); i++) {
-                String iLine = allSentence.get(i).replaceAll("[,.:-]", "");
-                String[] words = iLine.split(" ");
+                String iLine = allSentence.get(i).replaceAll(PUNCTUATION_MARKS_REGEX, "");
+                String[] words = iLine.split(WORD_SPLIT_REGEX);
                 for (String word : words) {
                     if (firstLineWord.toLowerCase().equals(word.toLowerCase())) {
                         isUnique = false;
@@ -83,7 +86,7 @@ public class ServiceImpl implements Service {
         }
         return new ParsedText(uniqueWords);
     }
-    
+
     public ParsedText findWordsOfGivenLengthInInterrogativeSentence(ParsedText parsedText, int length) {
         List<String> necessaryWords = new ArrayList<String>();
         List<String> interrogativeSentences = new ArrayList<String>();
